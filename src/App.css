@@ -1,3 +1,10 @@
+:root {
+  --spotify-green: #1db954;
+  --spotify-darkgreen: #159543;
+  --spotify-black: #191414;
+}
+
+
 .App {
   text-align: center;
 }
@@ -24,6 +31,23 @@
   color: white;
 }
 
+.App-main {
+  /* background-color: rgb(211, 217, 222); */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(4px + 2vmin);
+  font-family: sans-serif;
+  padding: 2em 4em 2em;
+  color: white;
+}
+
+body {
+  background-color: var(--spotify-black);
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +59,33 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.rand-button {
+  color: var(--spotify-black);
+  /* Or any color you prefer */
+  font-size: 20px;
+  /* Set a font size */
+  display: inline-block;
+  padding: 11px 13px;
+  background: var(--spotify-green);
+  /* Background that matches its surrounding */
+  border: 2px solid var(--spotify-green);
+  /* Dark border */
+  border-radius: 8px;
+  /* Rounded corners */
+  transition: background 0.1s ease-in-out;
+  /* Transition for a smooth color change */
+  text-decoration: none;
+  /* Removes underline if the button is a link */
+}
+
+.rand-button:hover {
+  /* Dark background */
+  transform: scale(1.05);
+}
+
+.rand-button:active {
+  background: var(--spotify-darkgreen);
+  transform: scale(1);
 }
