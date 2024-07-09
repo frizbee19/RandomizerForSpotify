@@ -10,6 +10,10 @@ function App() {
   // const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [displayedSong, setDisplayedSong] = useState();
+  const [displayedGenre, setDisplayedGenre] = useState("");
+  const [genresList, setGenresList] = useState([]);
+
+  // var genresList = [];
 
   const isMobile = false;
 
@@ -34,12 +38,12 @@ function App() {
     const randomCharacter = characters.charAt(Math.floor(Math.random() * characters.length));
     let randomQuery = '';
 
-    if (Math.random() < 0.5) {
-      randomQuery = randomCharacter + '%';
-    }
-    else {
-      randomQuery = '%' + randomCharacter + '%'
-    }
+    // if (Math.random() < 0.5) {
+    //   randomQuery = randomCharacter + '%';
+    // }
+    // else {
+    //   randomQuery = '%' + randomCharacter + '%'
+    // }
     randomQuery = randomCharacter;
 
     if (Math.random() < 0.5) {
@@ -51,22 +55,24 @@ function App() {
     return randomQuery;
   }
 
-  async function getGenreList() {
+  async function getGenreList(access_token = accessToken) {
     var searchParameters = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken
+        'Authorization': 'Bearer ' + access_token
       }
     }
-    var genreResult = await fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', searchParameters)
+    var genresResult = await fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', searchParameters)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-      })
+        // console.log(data.genres);
+        return data.genres;
+      });
+    return genresResult;
   }
 
-  async function search(query, offset = 0) {
+  async function search(query, offset = 0, genre = '') {
     // console.log("Search for " + searchInput)
 
 
@@ -77,21 +83,47 @@ function App() {
         'Authorization': 'Bearer ' + accessToken
       }
     }
-    var trackResult = await fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track' + '&offset=' + offset, searchParameters)
+    var tracksResult = await fetch('https://api.spotify.com/v1/search?q=' + query + '%20genre%3A' + genre + '&type=track' + '&offset=' + offset, searchParameters)
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        return data.tracks.items[0];
+        return data.tracks;
       })
-    setDisplayedSong(trackResult)
-    console.log(displayedSong)
+    // setDisplayedSong(trackResult)
+    return tracksResult;
   }
 
   async function randomSearch() {
+    var genres = [];
+    if(genresList.length == 0) {
+      console.log('Getting genres...');
+      genres = await getGenreList();
+      setGenresList(genres);
+    }
+    else {
+      genres = genresList;
+    }
+    let randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
+    console.log("genre: " + randomGenre);
     let randomOffset = 0;
     randomOffset = Math.floor(Math.random() * 1000);
     console.log(randomOffset)
-    await search(generateRandomQuery(), randomOffset);
+    let tracks = await search(generateRandomQuery(), randomOffset, randomGenre);
+    if(!tracks || !tracks.items[0]) {
+      console.log("retrying search");
+      randomSearch();
+    }
+    else {
+      setDisplayedSong(tracks.items[0]);
+      let genre = () => {
+        let result = "";
+        for(const word of randomGenre.split('-')) {
+          result += word[0].toUpperCase() + word.substring(1) + " ";
+        }
+        return result.trim();
+      }
+      setDisplayedGenre(genre);
+    }
   }
 
   function getArtists() {
@@ -118,11 +150,6 @@ function App() {
           }}>
             Randomize
           </button>
-          <button type='button' className='rand-button' onClick={event => {
-            getGenreList();
-          }}>
-            debug genre list
-          </button>
         </div>
         {displayedSong ? (
 
@@ -137,6 +164,7 @@ function App() {
                 alignItems: 'flex-start', textAlign: 'left', width: '50%'}}>
               <p>Name: {displayedSong.name}</p>
               <p>Artist: {getArtists().join(', ')} </p>
+              <p>Genre: {displayedGenre}</p>
             </div>
           </div>
         ) : (
