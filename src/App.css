@@ -2,6 +2,7 @@
   --spotify-green: #1db954;
   --spotify-darkgreen: #159543;
   --spotify-black: #191414;
+  --spotify-gray: #a0a0a0;
 }
 
 
@@ -39,7 +40,8 @@
   align-items: center;
   justify-content: flex-start;
   font-size: calc(4px + 2vmin);
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
   padding: 2em 4em 2em;
   color: white;
 }
@@ -65,6 +67,7 @@ body {
   color: var(--spotify-black);
   /* Or any color you prefer */
   font-size: 20px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   /* Set a font size */
   display: inline-block;
   padding: 11px 13px;
@@ -88,4 +91,23 @@ body {
 .rand-button:active {
   background: var(--spotify-darkgreen);
   transform: scale(1);
+}
+
+.explicit {
+  color: var(--spotify-black);
+  background-color: var(--spotify-gray);
+  border-radius: 0.5vmin;
+  padding: 0.6vmin 1vmin;
+  font-size: 60%;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.type {
+  color: var(--spotify-gray);
+}
+
+.name {
+  color: white;
+  text-align: end;
 }

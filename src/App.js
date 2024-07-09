@@ -28,7 +28,6 @@ function App() {
     fetch('https://accounts.spotify.com/api/token', authOptions)
       .then(result => result.json())
       .then(data => {
-        console.log(data.access_token);
         setAccessToken(data.access_token);})
   }, [])
 
@@ -86,7 +85,7 @@ function App() {
     var tracksResult = await fetch('https://api.spotify.com/v1/search?q=' + query + '%20genre%3A' + genre + '&type=track' + '&offset=' + offset, searchParameters)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         return data.tracks;
       })
     // setDisplayedSong(trackResult)
@@ -107,7 +106,7 @@ function App() {
     console.log("genre: " + randomGenre);
     let randomOffset = 0;
     randomOffset = Math.floor(Math.random() * 1000);
-    console.log(randomOffset)
+    // console.log(randomOffset)
     let tracks = await search(generateRandomQuery(), randomOffset, randomGenre);
     if(!tracks || !tracks.items[0]) {
       console.log("retrying search");
@@ -115,6 +114,7 @@ function App() {
     }
     else {
       setDisplayedSong(tracks.items[0]);
+      console.log(tracks.items[0]);
       let genre = () => {
         let result = "";
         for(const word of randomGenre.split('-')) {
@@ -127,12 +127,24 @@ function App() {
   }
 
   function getArtists() {
-    let artistList = []
-    for(const artist of displayedSong.artists){
-      artistList.push(artist.name);
-    }
-    return artistList
+    return displayedSong.artists.map((artist, index) => (
+      <span key={artist.uri}>
+        <a href={artist.uri} target="_blank" rel="noopener noreferrer" className='name'>
+          {artist.name}
+        </a>
+        {index < displayedSong.artists.length - 1 && ', '}
+      </span>
+    ));
+  }
 
+  function getLength() {
+    let totalSeconds = Math.round(displayedSong.duration_ms / 1000);
+    let minutes = "" + Math.floor(totalSeconds / 60);
+    let seconds = "" + (totalSeconds % 60);
+    if(seconds.length <= 1) {
+      seconds = "0" + seconds;
+    }
+    return "" + minutes + ":" + seconds;
   }
 
 
@@ -153,18 +165,22 @@ function App() {
         </div>
         {displayedSong ? (
 
-          <div style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '1000px' }}>
+          <div style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
             <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex', backgroundColor: 'white' }}>
-            <a href={displayedSong.external_urls.spotify} style={{ width: '100%', height: 'auto' }}>
+            <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
               <img src={displayedSong.album.images[0].url} style={{width: '100%'}}/>
             </a>
             </div>
             <div style={
               { flexDirection: 'column', flex: !isMobile ? 4 : '0 1 auto', marginRight: !isMobile ? '3em' : '0em', 
-                alignItems: 'flex-start', textAlign: 'left', width: '50%'}}>
-              <p>Name: {displayedSong.name}</p>
-              <p>Artist: {getArtists().join(', ')} </p>
-              <p>Genre: {displayedGenre}</p>
+                alignItems: 'flex-start', textAlign: 'left', width: '50vw'}}>
+              <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp; 
+                {displayedSong.explicit && <span className='explicit'>Explicit</span>}
+              </p>
+              <p className='type'>Artist &#9; {getArtists()} </p>
+              <p className='type'>Album &#9; <a className='name' href={displayedSong.album.uri}>{displayedSong.album.name}</a></p>
+              <p className='type'>Genre &#9; <span className='name'>{displayedGenre}</span></p>
+              <p className='type'>Duration &#9; <span className='name'>{getLength()}</span></p>
             </div>
           </div>
         ) : (
