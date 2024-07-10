@@ -12,6 +12,8 @@ function App() {
   const [displayedSong, setDisplayedSong] = useState();
   const [displayedGenre, setDisplayedGenre] = useState("");
   const [genresList, setGenresList] = useState([]);
+  const [autoplay, setAutoplay] = useState(false);
+  const [autoplayQueue, setAutoplayQueue] = useState(false);
 
   // var genresList = [];
 
@@ -28,7 +30,8 @@ function App() {
     fetch('https://accounts.spotify.com/api/token', authOptions)
       .then(result => result.json())
       .then(data => {
-        setAccessToken(data.access_token);})
+        setAccessToken(data.access_token);
+      })
   }, [])
 
   function generateRandomQuery() {
@@ -94,7 +97,7 @@ function App() {
 
   async function randomSearch() {
     var genres = [];
-    if(genresList.length == 0) {
+    if (genresList.length == 0) {
       console.log('Getting genres...');
       genres = await getGenreList();
       setGenresList(genres);
@@ -108,7 +111,7 @@ function App() {
     randomOffset = Math.floor(Math.random() * 1000);
     // console.log(randomOffset)
     let tracks = await search(generateRandomQuery(), randomOffset, randomGenre);
-    if(!tracks || !tracks.items[0]) {
+    if (!tracks || !tracks.items[0]) {
       console.log("retrying search");
       randomSearch();
     }
@@ -117,7 +120,7 @@ function App() {
       console.log(tracks.items[0]);
       let genre = () => {
         let result = "";
-        for(const word of randomGenre.split('-')) {
+        for (const word of randomGenre.split('-')) {
           result += word[0].toUpperCase() + word.substring(1) + " ";
         }
         return result.trim();
@@ -141,12 +144,20 @@ function App() {
     let totalSeconds = Math.round(displayedSong.duration_ms / 1000);
     let minutes = "" + Math.floor(totalSeconds / 60);
     let seconds = "" + (totalSeconds % 60);
-    if(seconds.length <= 1) {
+    if (seconds.length <= 1) {
       seconds = "0" + seconds;
     }
     return "" + minutes + ":" + seconds;
   }
 
+  const handleAutoplay = () => {
+    setAutoplayQueue(!autoplayQueue);
+  }
+
+  const handleRandomize = () => {
+    randomSearch();
+    setAutoplay(autoplayQueue);
+  }
 
   return (
     <body>
@@ -157,30 +168,43 @@ function App() {
             onChange={event => setSearchInput(event.target.value)}
           /> */}
         <div style={{ padding: '10px', margin: '10px' }}>
-          <button type='button' className='rand-button' onClick={event => {
-            randomSearch();
-          }}>
+          <button type='button' className='rand-button' onClick={handleRandomize}>
             Randomize
           </button>
+          <label className='checkContainer'>Autoplay
+            <input value = "autoplay" type='checkbox' onChange={handleAutoplay} checked={autoplayQueue} className='checkbox'/>
+            <span className='checkmark'></span>
+          </label>
+          
         </div>
         {displayedSong ? (
 
           <div style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
-            <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex', backgroundColor: 'white' }}>
-            <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
-              <img src={displayedSong.album.images[0].url} style={{width: '100%'}}/>
-            </a>
+            <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex' }}>
+              <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
+                <img src={displayedSong.album.images[0].url} style={{ width: '100%' }} />
+              </a>
             </div>
             <div style={
-              { flexDirection: 'column', flex: !isMobile ? 4 : '0 1 auto', marginRight: !isMobile ? '3em' : '0em', 
-                alignItems: 'flex-start', textAlign: 'left', width: '50vw'}}>
-              <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp; 
-                {displayedSong.explicit && <span className='explicit'>Explicit</span>}
-              </p>
-              <p className='type'>Artist &#9; {getArtists()} </p>
-              <p className='type'>Album &#9; <a className='name' href={displayedSong.album.uri}>{displayedSong.album.name}</a></p>
-              <p className='type'>Genre &#9; <span className='name'>{displayedGenre}</span></p>
-              <p className='type'>Duration &#9; <span className='name'>{getLength()}</span></p>
+              {
+                flexDirection: 'column', flex: !isMobile ? 4 : '0 1 auto', marginRight: !isMobile ? '3em' : '0em',
+                alignItems: 'flex-start', textAlign: 'left', width: '50vw'
+              }}>
+              <div style={{ marginBottom: '50px' }}>
+                <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp;
+                  {displayedSong.explicit && <span className='explicit'>Explicit</span>}
+                </p>
+                <p className='type'>Artist &#9; {getArtists()} </p>
+                <p className='type'>Album &#9; <a className='name' href={displayedSong.album.uri}>{displayedSong.album.name}</a></p>
+                <p className='type'>Genre &#9; <span className='name'>{displayedGenre}</span></p>
+                <p className='type'>Duration &#9; <span className='name'>{getLength()}</span></p>
+              </div>
+              <div>
+                <p className='type' style={{fontSize: '0.5em'}}>Preview</p>
+                <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
+
+                </audio>
+              </div>
             </div>
           </div>
         ) : (
