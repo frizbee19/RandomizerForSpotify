@@ -65,6 +65,7 @@ body {
 
 .rand-button {
   color: var(--spotify-black);
+  cursor: pointer;
   /* Or any color you prefer */
   font-size: 20px;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -72,6 +73,7 @@ body {
   display: inline-block;
   padding: 11px 13px;
   background: var(--spotify-green);
+  margin: 2vh 2vw;
   /* Background that matches its surrounding */
   border: 2px solid var(--spotify-green);
   /* Dark border */
@@ -90,6 +92,7 @@ body {
 
 .rand-button:active {
   background: var(--spotify-darkgreen);
+  border-color: var(--spotify-darkgreen);
   transform: scale(1);
 }
 
@@ -110,4 +113,84 @@ body {
 .name {
   color: white;
   text-align: end;
+  text-decoration: none;
+}
+
+a.name:hover {
+  text-decoration: underline;
+}
+
+
+.checkContainer {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: calc(2vmin);
+  color: var(--spotify-gray);
+  user-select: none;
+  vertical-align: middle;
+}
+
+.checkContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2vmin;
+  width: 2vmin;
+  background-color: var(--spotify-black);
+  border: 2px solid var(--spotify-gray);
+  border-radius: 50%;
+}
+
+.checkContainer:hover {
+  color: white;
+}
+
+/* On mouse-over, add a grey background color */
+.checkContainer:hover input ~ .checkmark {
+  border-color: white;
+}
+
+.checkContainer:hover input:checked ~ .checkmark {
+  border-color: white;
+  background-color: white;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkContainer input:checked ~ .checkmark {
+  background-color: var(--spotify-gray);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkContainer .checkmark:after {
+  left: 0.52vmin;
+  top: 0.12vmin;
+  width: 0.6vmin;
+  height: 1.2vmin;
+  border: solid var(--spotify-black);
+  border-width: 0 .35vmin .35vmin 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
