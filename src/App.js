@@ -3,6 +3,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
 import SpotifyWebPlayer from 'react-spotify-web-playback';
+import InfoDisplay from './Components/InfoDisplay';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
@@ -50,7 +51,7 @@ function App() {
     }
   }, [])
 
-
+  
 
 
   function handleRedirect() {
@@ -72,7 +73,7 @@ function App() {
     }
     fetch(TOKEN, authOptions)
       .then(result => {
-        if(!result.ok) {
+        if (!result.ok) {
           throw new Error(`HTTP error! status: ${result.status}`);
         }
         return result.json();
@@ -86,7 +87,7 @@ function App() {
       .catch(error => {
         console.log('Fetch error:', error);
       })
-      
+
   }
 
   function getCode() {
@@ -205,27 +206,6 @@ function App() {
     }
   }
 
-  function getArtists() {
-    return displayedSong.artists.map((artist, index) => (
-      <span key={artist.uri}>
-        <a href={artist.uri} target="_blank" rel="noopener noreferrer" className='name'>
-          {artist.name}
-        </a>
-        {index < displayedSong.artists.length - 1 && ', '}
-      </span>
-    ));
-  }
-
-  function getLength() {
-    let totalSeconds = Math.round(displayedSong.duration_ms / 1000);
-    let minutes = "" + Math.floor(totalSeconds / 60);
-    let seconds = "" + (totalSeconds % 60);
-    if (seconds.length <= 1) {
-      seconds = "0" + seconds;
-    }
-    return "" + minutes + ":" + seconds;
-  }
-
   const handleAutoplay = () => {
     setAutoplayQueue(!autoplayQueue);
   }
@@ -256,45 +236,25 @@ function App() {
 
       </div>
       {displayedSong ? (
-
-        <div style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
-          <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex' }}>
-            <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
-              <img src={displayedSong.album.images[0].url} style={{ width: '100%' }} />
-            </a>
-          </div>
-          <div style={
-            {
-              flexDirection: 'column', flex: !isMobile ? 4 : '0 1 auto', marginRight: !isMobile ? '3em' : '0em',
-              alignItems: 'flex-start', textAlign: 'left', width: '50vw'
-            }}>
-            <div style={{ marginBottom: '50px' }}>
-              <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp;
-                {displayedSong.explicit && <span className='explicit'>Explicit</span>}
-              </p>
-              <p className='type'>Artist &#9; {getArtists()} </p>
-              <p className='type'>Album &#9; <a className='name' href={displayedSong.album.uri}>{displayedSong.album.name}</a></p>
-              <p className='type'>Genre &#9; <span className='name'>{displayedGenre}</span></p>
-              <p className='type'>Duration &#9; <span className='name'>{getLength()}</span></p>
-            </div>
-            {isLoggedIn ? (
-              <div>
-                {/* <SpotifyWebPlayer token={accessToken} showSaveIcon uris={displayedSong ? [displayedSong.uri] : []}
+        <div>
+          <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre} isMobile={isMobile}/>
+          {isLoggedIn ? (
+            <div>
+              {/* <SpotifyWebPlayer token={accessToken} showSaveIcon uris={displayedSong ? [displayedSong.uri] : []}
                   styles={{bgColor: '#191414', color: '#ffffff', loaderColor: '#ffffff', sliderHandleColor: '#ffffff', sliderColor: '#1db954',
                   trackNameColor: '#ffffff', trackArtistColor: '#a0a0a0', sliderTrackColor: '#a0a0a0'}} 
                   hideCoverArt='true' hideAttribution='true' autoplay={autoplay}
                 /> */}
-              </div>
-            ) : (
-              <div>
-                <p className='type' style={{ fontSize: '0.5em' }}>Preview</p>
-                <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
+            </div>
+          ) : (
+            <div>
+              <p className='type' style={{ fontSize: '0.5em' }}>Preview</p>
+              <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
 
-                </audio>
+              </audio>
 
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       ) : (
         <div></div>
