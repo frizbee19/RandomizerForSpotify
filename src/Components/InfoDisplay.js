@@ -41,7 +41,8 @@ function InfoDisplay(props) {
 
 
   return (
-    <div style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
+    <div className="infoContainer"
+      style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
       <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex' }}>
         <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
           <img src={displayedSong.album.images[0].url} style={{ width: '100%' }} />

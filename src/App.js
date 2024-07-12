@@ -51,7 +51,7 @@ function App() {
     }
   }, [])
 
-  
+
 
 
   function handleRedirect() {
@@ -217,18 +217,13 @@ function App() {
 
   return (
     <div className='App-main'>
-      {/* <FormControl
-            placeholder='Search For Song'
-            type='input'
-            onChange={event => setSearchInput(event.target.value)}
-          /> */}
       <div style={{ padding: '10px', margin: '10px' }}>
         <button type='button' className='rand-button' onClick={handleRandomize}>
           Randomize
         </button>
-        <button type='button' className='rand-button' onClick={requestAuthorization}>
+        {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In
-        </button>
+        </button> */}
         <label className='checkContainer'>Autoplay
           <input value="autoplay" type='checkbox' onChange={handleAutoplay} checked={autoplayQueue} className='checkbox' />
           <span className='checkmark'></span>
@@ -237,24 +232,25 @@ function App() {
       </div>
       {displayedSong ? (
         <div>
-          <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre} isMobile={isMobile}/>
-          {isLoggedIn ? (
+          <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre} isMobile={isMobile} />
+          {/* {isLoggedIn ? (
             <div>
-              {/* <SpotifyWebPlayer token={accessToken} showSaveIcon uris={displayedSong ? [displayedSong.uri] : []}
+              <SpotifyWebPlayer token={accessToken} showSaveIcon uris={displayedSong ? [displayedSong.uri] : []}
                   styles={{bgColor: '#191414', color: '#ffffff', loaderColor: '#ffffff', sliderHandleColor: '#ffffff', sliderColor: '#1db954',
                   trackNameColor: '#ffffff', trackArtistColor: '#a0a0a0', sliderTrackColor: '#a0a0a0'}} 
                   hideCoverArt='true' hideAttribution='true' autoplay={autoplay}
-                /> */}
+                />
             </div>
           ) : (
-            <div>
-              <p className='type' style={{ fontSize: '0.5em' }}>Preview</p>
-              <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
+            
+          )} */}
+          <div>
+            <p className='type' style={{ fontSize: '0.5em' }}>Preview</p>
+            <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
 
-              </audio>
+            </audio>
 
-            </div>
-          )}
+          </div>
         </div>
       ) : (
         <div></div>

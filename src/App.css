@@ -28,18 +28,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(16px + 1vmin);
   color: white;
 }
 
 .App-main {
-  /* background-color: rgb(211, 217, 222); */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(4px + 2vmin);
+  font-size: calc(16px + 1vmin);
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
   padding: 2em 4em 2em;
@@ -47,7 +46,7 @@
 }
 
 body {
-  background-color: var(--spotify-black);
+  background-color: black;
 }
 
 .App-link {
@@ -68,27 +67,20 @@ body {
 .rand-button {
   color: var(--spotify-black);
   cursor: pointer;
-  /* Or any color you prefer */
   font-size: 20px;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
-  /* Set a font size */
   display: inline-block;
   padding: 11px 13px;
   background: var(--spotify-green);
-  margin: 2vh 2vw;
-  /* Background that matches its surrounding */
+  margin: 2vh 2vw 2vh 0vw;
   border: 2px solid var(--spotify-green);
-  /* Dark border */
   border-radius: 8px;
-  /* Rounded corners */
   transition: background 0.1s ease-in-out;
-  /* Transition for a smooth color change */
   text-decoration: none;
-  /* Removes underline if the button is a link */
 }
 
 .rand-button:hover {
-  /* Dark background */
+
   transform: scale(1.05);
 }
 
@@ -127,7 +119,7 @@ a.name:hover {
   position: relative;
   padding-left: 35px;
   cursor: pointer;
-  font-size: calc(2vmin);
+  font-size: 20px;
   color: var(--spotify-gray);
   user-select: none;
   vertical-align: middle;
@@ -141,14 +133,14 @@ a.name:hover {
   width: 0;
 }
 
-/* Create a custom checkbox */
+
 .checkmark {
   position: absolute;
   top: 0;
   left: 0;
-  height: 2vmin;
-  width: 2vmin;
-  background-color: var(--spotify-black);
+  height: 18px;
+  width: 18px;
+  background: transparent;
   border: 2px solid var(--spotify-gray);
   border-radius: 50%;
 }
@@ -157,7 +149,7 @@ a.name:hover {
   color: white;
 }
 
-/* On mouse-over, add a grey background color */
+
 .checkContainer:hover input ~ .checkmark {
   border-color: white;
 }
@@ -167,32 +159,39 @@ a.name:hover {
   background-color: white;
 }
 
-/* When the checkbox is checked, add a blue background */
+
 .checkContainer input:checked ~ .checkmark {
   background-color: var(--spotify-gray);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark when checked */
+
 .checkContainer input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
+
 .checkContainer .checkmark:after {
-  left: 0.52vmin;
-  top: 0.12vmin;
-  width: 0.6vmin;
-  height: 1.2vmin;
-  border: solid var(--spotify-black);
-  border-width: 0 .35vmin .35vmin 0;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 12px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.infoContainer  {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  min-width: 40vw;
+  max-width: 60vw;
+  padding: 50px 10px;
 }
