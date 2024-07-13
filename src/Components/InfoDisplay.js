@@ -14,19 +14,6 @@ function InfoDisplay(props) {
     return "" + minutes + ":" + seconds;
   }
 
-  // const openSpotifyApp = (uri) => {
-  //   const appLink = uri;
-  //   const webLink = `https://open.spotify.com/artist/${uri.split(':')[2]}`;
-    
-  //   // Attempt to open the app link
-  //   window.location.href = appLink;
-
-  //   // Fallback to web link
-  //   setTimeout(() => {
-  //     window.open(webLink, '_blank');
-  //   }, 500);
-  // };
-
 
   function getArtists() {
     return displayedSong.artists.map((artist, index) => (
@@ -42,10 +29,11 @@ function InfoDisplay(props) {
 
   return (
     <div className="infoContainer"
-      style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start', width: '60vw' }}>
-      <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex' }}>
+      style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start'}}>
+      <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
         <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
-          <img src={displayedSong.album.images[0].url} style={{ width: '100%' }} />
+          <img src={displayedSong.album.images[0].url} style={{ width: '100%', position: 'absolute', zIndex: '2' }} />
+          <img src={displayedSong.album.images[0].url} style={{ width: '100%', filter: 'blur(200px)', position: 'static', zIndex: '1', opacity: '0.65' }} />
         </a>
       </div>
       <div style={
@@ -53,7 +41,7 @@ function InfoDisplay(props) {
           flexDirection: 'column', flex: !isMobile ? 4 : '0 1 auto', marginRight: !isMobile ? '3em' : '0em',
           alignItems: 'flex-start', textAlign: 'left', width: '50vw'
         }}>
-        <div style={{ marginBottom: '50px' }}>
+        <div style={{ marginBottom: '50px', zIndex: '3', padding: '5px 0px 0px 0px' }}>
           <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp;
             {displayedSong.explicit && <span className='explicit'>Explicit</span>}
           </p>

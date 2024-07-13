@@ -62,7 +62,26 @@ body {
   }
 }
 
+.small-button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
 
+svg.mute {
+  fill: var(--spotify-gray);
+  stroke: var(--spotify-gray);
+}
+
+svg.mute:hover {
+  fill: white;
+  stroke: white;
+}
+
+svg.mute:active {
+  fill: var(--spotify-gray);
+  stroke: white;
+}
 
 .rand-button {
   color: var(--spotify-black);
@@ -77,6 +96,7 @@ body {
   border-radius: 8px;
   transition: background 0.1s ease-in-out;
   text-decoration: none;
+  vertical-align: middle;
 }
 
 .rand-button:hover {
@@ -93,8 +113,8 @@ body {
 .explicit {
   color: var(--spotify-black);
   background-color: var(--spotify-gray);
-  border-radius: 0.5vmin;
-  padding: 0.6vmin 1vmin;
+  border-radius: 4px;
+  padding: 6px 9px;
   font-size: 60%;
   font-weight: bold;
   vertical-align: middle;
@@ -194,4 +214,5 @@ a.name:hover {
   min-width: 40vw;
   max-width: 60vw;
   padding: 50px 10px;
+  overflow: hidden;
 }

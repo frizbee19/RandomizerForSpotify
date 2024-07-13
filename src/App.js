@@ -1,9 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
 import SpotifyWebPlayer from 'react-spotify-web-playback';
+
 import InfoDisplay from './Components/InfoDisplay';
+import PreviewPlayer from './Components/PreviewPlayer';
+
+import DiceLogo from './Icons/DiceLogo.svg';
+
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
@@ -219,15 +223,14 @@ function App() {
     <div className='App-main'>
       <div style={{ padding: '10px', margin: '10px' }}>
         <button type='button' className='rand-button' onClick={handleRandomize}>
+        <img src={DiceLogo} style={{width: '30px', height: '30px', verticalAlign: 'middle', marginRight: '5px', marginTop: '2px', paddingBottom: '5px'}}/>
           Randomize
         </button>
+        <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true}/>
         {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In
         </button> */}
-        <label className='checkContainer'>Autoplay
-          <input value="autoplay" type='checkbox' onChange={handleAutoplay} checked={autoplayQueue} className='checkbox' />
-          <span className='checkmark'></span>
-        </label>
+        
 
       </div>
       {displayedSong ? (
@@ -244,13 +247,6 @@ function App() {
           ) : (
             
           )} */}
-          <div>
-            <p className='type' style={{ fontSize: '0.5em' }}>Preview</p>
-            <audio controls src={displayedSong.preview_url} autoPlay={autoplay}>
-
-            </audio>
-
-          </div>
         </div>
       ) : (
         <div></div>
