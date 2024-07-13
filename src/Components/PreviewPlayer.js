@@ -1,10 +1,6 @@
 import '../App.css';
 import PlayPreview from '../Icons/PlayPreview.svg';
-import Play from '../Icons/play.svg';
-import Pause from '../Icons/pause.svg';
 import Stop from '../Icons/stop-sharp.svg';
-import Mute from '../Icons/volume-mute.svg';
-import Unmute from '../Icons/volume-high.svg';
 
 import { useState, useRef, useEffect } from 'react';
 
@@ -13,12 +9,11 @@ function PreviewPlayer(props) {
   const [isMuted, setIsMuted] = useState(false);
   const previewAudioRef = useRef(null);
 
-  const src = props.src;
-  const active = props.active && src.length > 0;
+  var src = props.src || '';
+  var active = props.active && src && src.length > 0;
 
   useEffect(() => {
     const previewAudio = previewAudioRef.current;
-
     if (previewAudio) {
       previewAudio.addEventListener("ended", onEnded);
       return () => {

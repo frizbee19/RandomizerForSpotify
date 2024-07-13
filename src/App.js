@@ -216,13 +216,17 @@ function App() {
 
   const handleRandomize = () => {
     randomSearch();
+    document.getElementById("random").disabled = true;
+    setTimeout(() => {
+      document.getElementById("random").disabled = false;
+    }, 1000);
     setAutoplay(autoplayQueue);
   }
 
   return (
     <div className='App-main'>
       <div style={{ padding: '10px', margin: '10px' }}>
-        <button type='button' className='rand-button' onClick={handleRandomize}>
+        <button id='random' type='button' className='rand-button' onClick={handleRandomize}>
         <img src={DiceLogo} style={{width: '30px', height: '30px', verticalAlign: 'middle', marginRight: '5px', marginTop: '2px', paddingBottom: '5px'}}/>
           Randomize
         </button>
