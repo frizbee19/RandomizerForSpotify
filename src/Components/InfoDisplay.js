@@ -1,3 +1,6 @@
+
+import SpotifyLogo from "../Icons/Spotify_Logo_RGB_White.png";
+
 function InfoDisplay(props) {
   let displayedSong = props.displayedSong;
   let displayedGenre = props.displayedGenre;
@@ -30,6 +33,9 @@ function InfoDisplay(props) {
   return (
     <div className="infoContainer"
       style={{ flexDirection: !isMobile ? 'row' : 'column', marginBottom: '1.45em', display: 'flex', alignContent: 'flex-start'}}>
+      <a href="https://open.spotify.com">
+        <img src={SpotifyLogo} className="spotifyLogo"/>
+      </a>
       <div style={{ width: '300px', height: '300px', margin: '2% 7.5%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
         <a href={displayedSong.uri} style={{ width: '100%', height: 'auto' }}>
           <img src={displayedSong.album.images[0].url} style={{ width: '100%', position: 'absolute', zIndex: '2' }} />

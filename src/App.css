@@ -1,8 +1,9 @@
 :root {
   --spotify-green: #1db954;
   --spotify-darkgreen: #159543;
-  --spotify-black: #191414;
+  --spotify-black: #141414;
   --spotify-gray: #a0a0a0;
+  --spotify-error: #e01636;
 }
 
 
@@ -41,7 +42,7 @@
   font-size: calc(16px + 1vmin);
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
-  padding: 2em 4em 2em;
+  padding: 3.25em 4em 2em;
   color: white;
 }
 
@@ -212,7 +213,47 @@ a.name:hover {
   background-color: var(--spotify-black);
   border-radius: 20px;
   min-width: 40vw;
-  max-width: 60vw;
+  max-width: 70vw;
   padding: 50px 10px;
   overflow: hidden;
+  position: relative;
 }
+
+.errorContainer {
+  background-color: var(--spotify-error);
+  color: white;
+  font-size: 16px;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  text-align: center;
+}
+
+.header {
+  position: fixed;
+  border-bottom: solid 1px var(--spotify-black);
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  z-index: 99;
+  padding: 10px 20px 5px;
+  background-color: black;
+  text-align: left;
+}
+
+.spotifyLogo {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  height: 50px;
+}
+
+.controlContainer {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  padding: 3px 40px;
+  margin: 10px;
+}
+
