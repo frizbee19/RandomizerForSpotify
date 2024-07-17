@@ -3,6 +3,8 @@ import '../Mobile.css';
 import PlayPreview from '../Icons/PlayPreview.svg';
 import Stop from '../Icons/stop-sharp.svg';
 
+import { useMobile } from './MobileProvider';
+
 import { useState, useRef, useEffect } from 'react';
 
 function PreviewPlayer(props) {
@@ -12,7 +14,7 @@ function PreviewPlayer(props) {
 
   var src = props.src || '';
   var active = props.active && src && src.length > 0;
-  var isMobile = props.isMobile;
+  var isMobile = useMobile();
 
   useEffect(() => {
     const previewAudio = previewAudioRef.current;

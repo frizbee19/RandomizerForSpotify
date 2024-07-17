@@ -3,10 +3,12 @@ import SpotifyLogo from "../Icons/Spotify_Logo_RGB_White.png";
 import '../Mobile.css';
 import '../App.css';
 
+import { useMobile } from "./MobileProvider";
+
 function InfoDisplay(props) {
   let displayedSong = props.displayedSong;
   let displayedGenre = props.displayedGenre;
-  let isMobile = props.isMobile;
+  let isMobile = useMobile();
 
 
   function getLength() {
