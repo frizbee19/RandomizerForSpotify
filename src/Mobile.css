@@ -1,0 +1,73 @@
+:root {
+  --spotify-green: #1db954;
+  --spotify-darkgreen: #159543;
+  --spotify-black: #141414;
+  --spotify-gray: #a0a0a0;
+  --spotify-error: #e01636;
+}
+
+.App-mobile {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(16px + 1vmin);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+  padding: .25em .5em 2em;
+  color: white;
+}
+
+.rand-button-mobile {
+  color: var(--spotify-black);
+  cursor: pointer;
+  font-size: calc(16px + 2vmin);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  display: inline-block;
+  padding: 11px 13px;
+  background: var(--spotify-green);
+  margin: 1vh 1vw;
+  border: 2px solid var(--spotify-green);
+  border-radius: 8px;
+  transition: background 0.1s ease-in-out;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.rand-button-mobile:hover {
+
+  transform: scale(1.05);
+}
+
+.rand-button-mobile:active {
+  background: var(--spotify-darkgreen);
+  border-color: var(--spotify-darkgreen);
+  transform: scale(1);
+}
+
+.infoContainerMobile {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-width: 95%;
+  padding: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spotifyLogoMobile {
+  margin: 3vw;
+  height: 6vw;
+}
+
+.controlContainerMobile {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  padding: 3px 40px;
+  margin: 10px;
+  min-width: 95%;
+}
+

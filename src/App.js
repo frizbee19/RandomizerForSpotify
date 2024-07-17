@@ -1,4 +1,5 @@
 import './App.css';
+import './Mobile.css';
 import { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
 import SpotifyWebPlayer from 'react-spotify-web-playback';
@@ -266,14 +267,14 @@ function App() {
         <img src={DiceLogo} style={{width: '30px', height: '30px', verticalAlign: 'middle', marginRight: '5px', marginTop: '2px', paddingBottom: '5px'}}/>
           Randomize
         </button>
-        <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true}/>
+        <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true} isMobile={isMobile}/>
         {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In
         </button> */}
         
 
       </div>
-      {displayedSong ? (
+      {displayedSong && (
         <div>
           <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre} isMobile={isMobile} />
           {/* {isLoggedIn ? (
@@ -287,10 +288,8 @@ function App() {
           ) : (
             
           )} */}
-        </div>
-      ) : (
-        <div></div>
-      )
+        </div> 
+        )
       }
       {error && (
         <div className='errorContainer'>

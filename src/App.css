@@ -42,7 +42,7 @@
   font-size: calc(16px + 1vmin);
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
-  padding: 3.25em 4em 2em;
+  padding: 3.25em .5em 2em;
   color: white;
 }
 
@@ -82,6 +82,22 @@ svg.mute:hover {
 svg.mute:active {
   fill: var(--spotify-gray);
   stroke: white;
+}
+
+.rand-button-mobile {
+  color: var(--spotify-black);
+  cursor: pointer;
+  font-size: calc(16px + 2vmin);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  display: inline-block;
+  padding: 11px 13px;
+  background: var(--spotify-green);
+  margin: 1vh 1vw;
+  border: 2px solid var(--spotify-green);
+  border-radius: 8px;
+  transition: background 0.1s ease-in-out;
+  text-decoration: none;
+  vertical-align: middle;
 }
 
 .rand-button {
@@ -135,6 +151,11 @@ a.name:hover {
   text-decoration: underline;
 }
 
+.checkContainerMobile {
+  font-size: calc(16px + 2vmin);
+  margin: 1vh 1vw;
+  
+}
 
 .checkContainer {
   position: relative;
@@ -217,6 +238,22 @@ a.name:hover {
   padding: 50px 10px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 1.45em;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+.infoContainerMobile {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  min-width: 95%;
+  padding: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .errorContainer {
@@ -250,10 +287,23 @@ a.name:hover {
   height: 50px;
 }
 
+.spotifyLogoMobile {
+  margin: 3vw;
+  height: 6vw;
+}
+
 .controlContainer {
   background-color: var(--spotify-black);
   border-radius: 20px;
   padding: 3px 40px;
   margin: 10px;
+}
+
+.controlContainerMobile {
+  background-color: var(--spotify-black);
+  border-radius: 20px;
+  padding: 3px 40px;
+  margin: 10px;
+  min-width: 95%;
 }
 

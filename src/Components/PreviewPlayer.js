@@ -1,4 +1,5 @@
 import '../App.css';
+import '../Mobile.css';
 import PlayPreview from '../Icons/PlayPreview.svg';
 import Stop from '../Icons/stop-sharp.svg';
 
@@ -11,6 +12,7 @@ function PreviewPlayer(props) {
 
   var src = props.src || '';
   var active = props.active && src && src.length > 0;
+  var isMobile = props.isMobile;
 
   useEffect(() => {
     const previewAudio = previewAudioRef.current;
@@ -64,20 +66,43 @@ function PreviewPlayer(props) {
   //
   return (
     <span>
-      <audio id="preview" ref={previewAudioRef} src={src} autoPlay={isPlaying} muted={isMuted} />
-      <button type='button' className='rand-button' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
-        {isPlaying ? (
-          <img src={Stop} style={{ width: '50px', height: '50px' }} />
-        ) : (
-          <img src={PlayPreview} style={{ width: '50px', height: '50px' }} />
-        )}
-      </button>
-      <span>
-        <label className='checkContainer'>Mute
-          <input value="autoplay" type='checkbox' onChange={toggleMute} checked={isMuted} className='checkbox' />
-          <span className='checkmark'></span>
-        </label>
-      </span>
+      {!isMobile ? (
+        <span>
+          <audio id="preview" ref={previewAudioRef} src={src} autoPlay={isPlaying} muted={isMuted} />
+          <button type='button' className='rand-button' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
+            {isPlaying ? (
+              <img src={Stop} style={{ width: '50px', height: '50px' }} />
+            ) : (
+              <img src={PlayPreview} style={{ width: '50px', height: '50px' }} />
+            )}
+          </button>
+          <span>
+            <label className='checkContainer'>Mute
+              <input value="autoplay" type='checkbox' onChange={toggleMute} checked={isMuted} className='checkbox' />
+              <span className='checkmark'></span>
+            </label>
+
+          </span>
+        </span>
+      ) : (
+        <div>
+          <audio id="preview" ref={previewAudioRef} src={src} autoPlay={isPlaying} muted={isMuted} />
+          <button type='button' className='rand-button-mobile' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
+            {isPlaying ? (
+              <img src={Stop} style={{ width: '15vw', height: '15vw' }} />
+            ) : (
+              <img src={PlayPreview} style={{ width: '15vw', height: '15vw' }} />
+            )}
+          </button>
+          <span>
+            <label className='checkContainer checkContainerMobile'>Mute
+              <input value="autoplay" type='checkbox' onChange={toggleMute} checked={isMuted} className='checkbox' />
+              <span className='checkmark'></span>
+            </label>
+
+          </span>
+        </div>
+      )}
     </span>
   );
 }
