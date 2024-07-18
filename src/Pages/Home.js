@@ -20,7 +20,10 @@ function Home(props) {
 
   // var genresList = [];
   var accessToken = props.accessToken;
-  
+  var isMobile = useMobile();
+
+  var displayType = isMobile ? 'App-mobile' : 'App-main';
+
   useEffect(() => {
     setError(props.error);
   }, [props.error]);
@@ -155,26 +158,36 @@ function Home(props) {
   }
 
   return (
-      <div className='App-main'>
+    <div className={displayType}>
+      {!isMobile ? (
         <div className='header'>
           <img src={BannerLogo} style={{ height: '60px' }} />
         </div>
-        <div className='controlContainer'>
+      ) : (
+        <img src={BannerLogo} style={{ width: '90%', margin: '.5em' }} />
+      )}
+      <div className={!isMobile ? 'controlContainer' : 'controlContainerMobile'}>
+        {!isMobile ? (
           <button id='random' type='button' className='rand-button' onClick={handleRandomize}>
             <img src={DiceLogo} style={{ width: '30px', height: '30px', verticalAlign: 'middle', marginRight: '5px', marginTop: '2px', paddingBottom: '5px' }} />
             Randomize
           </button>
-          <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true}/>
-          {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
+        ) : (
+          <button id='random' type='button' className='rand-button-mobile' onClick={handleRandomize} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
+            <img src={DiceLogo} style={{ width: '15vw', height: '15vw', bottom: '-20' }}/>
+          </button>
+        )}
+        <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true} />
+        {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In
         </button> */}
 
 
-        </div>
-        {displayedSong && (
-          <div>
-            <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre}/>
-            {/* {isLoggedIn ? (
+      </div>
+      {displayedSong && (
+        <div>
+          <InfoDisplay displayedSong={displayedSong} displayedGenre={displayedGenre} />
+          {/* {isLoggedIn ? (
             <div>
               <SpotifyWebPlayer token={accessToken} showSaveIcon uris={displayedSong ? [displayedSong.uri] : []}
                   styles={{bgColor: '#191414', color: '#ffffff', loaderColor: '#ffffff', sliderHandleColor: '#ffffff', sliderColor: '#1db954',
@@ -185,15 +198,15 @@ function Home(props) {
           ) : (
             
           )} */}
-          </div>
-        )
-        }
-        {error && (
-          <div className='errorContainer'>
-            <p>Unable to connect to Spotify web services. We apologies for the inconvenience. Please try again later.</p>
-          </div>
-        )}
-      </div>
+        </div>
+      )
+      }
+      {error && (
+        <div className='errorContainer'>
+          <p>Unable to connect to Spotify web services. We apologies for the inconvenience. Please try again later.</p>
+        </div>
+      )}
+    </div>
   );
 }
 

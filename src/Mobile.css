@@ -12,10 +12,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(16px + 1vmin);
+  font-size: calc(14px + 1vmin);
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
-  padding: .25em .5em 2em;
+  padding: .8em .5em 2em;
   color: white;
 }
 
@@ -27,7 +27,7 @@
   display: inline-block;
   padding: 11px 13px;
   background: var(--spotify-green);
-  margin: 1vh 1vw;
+  margin: 1vh 2vw;
   border: 2px solid var(--spotify-green);
   border-radius: 8px;
   transition: background 0.1s ease-in-out;
@@ -51,23 +51,24 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  min-width: 95%;
-  padding: 10%;
+  width: 100%; /* Changed from min-width: 95% to width: 100% */
+  box-sizing: border-box; /* Include padding in the total width */
+  padding: 5% 0%; /* Adjusted padding to a smaller percentage */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .spotifyLogoMobile {
-  margin: 3vw;
-  height: 6vw;
+  margin: 4vw;
+  height: 8vw;
 }
 
 .controlContainerMobile {
   background-color: var(--spotify-black);
   border-radius: 20px;
-  padding: 3px 40px;
-  margin: 10px;
-  min-width: 95%;
+  width: 100%; /* Changed from min-width: 95% to width: 100% */
+  box-sizing: border-box; /* Include padding in the total width */
+  padding: 5%; /* Adjusted padding to a smaller percentage */
 }
 

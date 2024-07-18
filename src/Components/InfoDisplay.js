@@ -66,7 +66,7 @@ function InfoDisplay(props) {
         </div>
       ) : (
         <div className="infoContainerMobile">
-        <a href="https://open.spotify.com">
+          <a href="https://open.spotify.com">
             <img src={SpotifyLogo} className="spotifyLogoMobile" />
           </a>
           <div style={{ width: '60%', height: '60%', margin: '2%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
@@ -77,8 +77,8 @@ function InfoDisplay(props) {
           </div>
           <div style={
             {
-              flexDirection: 'column', flex: '4',
-              alignItems: 'flex-start', textAlign: 'left', width: '75vw'
+              flexDirection: 'column',
+              alignItems: 'flex-start', textAlign: 'left', width: '75%'
             }}>
             <div style={{ marginBottom: '50px', zIndex: '3' }}>
               <p className='type'>Title &#9; <a className='name' href={displayedSong.uri}>{displayedSong.name}</a> &nbsp;

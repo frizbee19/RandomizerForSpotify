@@ -87,7 +87,7 @@ function PreviewPlayer(props) {
           </span>
         </span>
       ) : (
-        <div>
+        <span>
           <audio id="preview" ref={previewAudioRef} src={src} autoPlay={isPlaying} muted={isMuted} />
           <button type='button' className='rand-button-mobile' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
             {isPlaying ? (
@@ -103,7 +103,7 @@ function PreviewPlayer(props) {
             </label>
 
           </span>
-        </div>
+        </span>
       )}
     </span>
   );
