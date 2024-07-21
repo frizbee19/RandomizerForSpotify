@@ -57,6 +57,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .spotifyLogoMobile {
@@ -70,5 +71,11 @@
   width: 100%; /* Changed from min-width: 95% to width: 100% */
   box-sizing: border-box; /* Include padding in the total width */
   padding: 5%; /* Adjusted padding to a smaller percentage */
+}
+
+.nameMobile {
+    color: white;
+    text-align: end;
+    text-decoration: underline;
 }
 

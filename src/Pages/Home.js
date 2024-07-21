@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 import InfoDisplay from '../Components/InfoDisplay';
 import PreviewPlayer from '../Components/PreviewPlayer';
+import About from '../Components/About';
 import { useMobile } from '../Components/MobileProvider';
 
 import DiceLogo from '../Icons/DiceLogo.svg';
@@ -110,7 +111,6 @@ function Home(props) {
   }
 
   async function randomSearch() {
-    console.log(accessToken);
     var genres = [];
     if (genresList.length === 0) {
       console.log('Getting genres...');
@@ -121,7 +121,6 @@ function Home(props) {
       genres = genresList;
     }
     let randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
-    console.log("genre: " + randomGenre);
     let randomOffset = 0;
     randomOffset = Math.floor(Math.random() * 1000);
     // console.log(randomOffset)
@@ -164,7 +163,7 @@ function Home(props) {
           <img src={BannerLogo} style={{ height: '60px' }} />
         </div>
       ) : (
-        <img src={BannerLogo} style={{ width: '90%', margin: '.5em' }} />
+        <img src={BannerLogo} style={{ width: '90%', margin: '.5em 0em' }} />
       )}
       <div className={!isMobile ? 'controlContainer' : 'controlContainerMobile'}>
         {!isMobile ? (
@@ -174,7 +173,7 @@ function Home(props) {
           </button>
         ) : (
           <button id='random' type='button' className='rand-button-mobile' onClick={handleRandomize} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
-            <img src={DiceLogo} style={{ width: '15vw', height: '15vw', bottom: '-20' }}/>
+            <img src={DiceLogo} style={{ width: '15vw', height: '15vw'}}/>
           </button>
         )}
         <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true} />
@@ -201,6 +200,7 @@ function Home(props) {
         </div>
       )
       }
+      <About/>
       {error && (
         <div className='errorContainer'>
           <p>Unable to connect to Spotify web services. We apologies for the inconvenience. Please try again later.</p>

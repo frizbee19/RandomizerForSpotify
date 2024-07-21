@@ -147,6 +147,12 @@ svg.mute:active {
   text-decoration: none;
 }
 
+.subtitle {
+  color: white;
+  font-size: calc(24px + 2vmin);
+  font-weight: 900;
+}
+
 a.name:hover {
   text-decoration: underline;
 }
@@ -233,12 +239,12 @@ a.name:hover {
 .infoContainer  {
   background-color: var(--spotify-black);
   border-radius: 20px;
-  min-width: 40vw;
+  min-width: 70vw;
   max-width: 70vw;
   padding: 50px 10px;
   overflow: hidden;
   position: relative;
-  margin-bottom: 1.45em;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   align-content: flex-start;
@@ -305,5 +311,13 @@ a.name:hover {
   padding: 3px 40px;
   margin: 10px;
   min-width: 95%;
+}
+
+.hoverScale {
+  scale: 1.00;
+}
+
+.hoverScale:hover {
+  scale: 1.02;
 }
 
