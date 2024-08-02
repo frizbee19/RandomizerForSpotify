@@ -31,14 +31,14 @@ function Home(props) {
   }, [props.error]);
 
   useEffect(() => {
-    if(props.accessToken) {
-    getGenreList()
-      .then(genres => {
-        setGenresList(genres);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    if (props.accessToken) {
+      getGenreList()
+        .then(genres => {
+          setGenresList(genres);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }, [props.accessToken]);
 
@@ -133,7 +133,7 @@ function Home(props) {
     else {
       genres = genresList;
     }
-    if(selectedGenre.length == 0) {
+    if (selectedGenre.length == 0) {
       var randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
     } else {
       var randomGenre = selectedGenre;
@@ -187,23 +187,15 @@ function Home(props) {
         <img src={BannerLogo} style={{ width: '90%', margin: '.5em 0em' }} />
       )}
       <div className={!isMobile ? 'controlContainer' : 'controlContainerMobile'}>
-        {!isMobile ? (
-            <select id='genreSelect' onChange={onGenreSelect} >
-              <option value=''>Any Genre</option>
-              {genresList.map((genre, index) => (
-                <option key={index} value={genre}>{
-                  genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
-                }</option>
-              ))}
-            </select>
-        ) : (
-            <select id='genreSelect' onChange={onGenreSelect}>
-              {genresList.map((genre, index) => (
-                <option key={index} value={genre}>{
-                    genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
-                }</option>
-              ))}
-            </select>
+        {!isMobile && (
+          <select id='genreSelect' onChange={onGenreSelect} >
+            <option value=''>Any Genre</option>
+            {genresList.map((genre, index) => (
+              <option key={index} value={genre}>{
+                genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+              }</option>
+            ))}
+          </select>
         )}
         {!isMobile ? (
           <button id='random' type='button' className='rand-button' onClick={handleRandomize}>
@@ -212,10 +204,22 @@ function Home(props) {
           </button>
         ) : (
           <button id='random' type='button' className='rand-button-mobile' onClick={handleRandomize} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
-            <img src={DiceLogo} style={{ width: '15vw', height: '15vw'}}/>
+            <img src={DiceLogo} style={{ width: '15vw', height: '15vw' }} />
           </button>
         )}
         <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true} />
+        {isMobile &&
+          (
+            <select id='genreSelect' onChange={onGenreSelect}>
+              <option value=''>Any Genre</option>
+              {genresList.map((genre, index) => (
+                <option key={index} value={genre}>{
+                  genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+                }</option>
+              ))}
+            </select>
+
+          )}
         {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In
         </button> */}
@@ -239,7 +243,7 @@ function Home(props) {
         </div>
       )
       }
-      <About/>
+      <About />
       {error && (
         <div className='errorContainer'>
           <p>Unable to connect to Spotify web services. We apologies for the inconvenience. Please try again later.</p>
