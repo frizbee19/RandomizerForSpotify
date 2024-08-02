@@ -15,6 +15,7 @@ function Home(props) {
   const [displayedSong, setDisplayedSong] = useState();
   const [displayedGenre, setDisplayedGenre] = useState("");
   const [genresList, setGenresList] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
   // const [autoplay, setAutoplay] = useState(false);
   // const [autoplayQueue, setAutoplayQueue] = useState(false);
   const [error, setError] = useState(props.error);
@@ -28,6 +29,18 @@ function Home(props) {
   useEffect(() => {
     setError(props.error);
   }, [props.error]);
+
+  useEffect(() => {
+    if(props.accessToken) {
+    getGenreList()
+      .then(genres => {
+        setGenresList(genres);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  }, [props.accessToken]);
 
   function generateRandomQuery() {
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -120,7 +133,11 @@ function Home(props) {
     else {
       genres = genresList;
     }
-    let randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
+    if(selectedGenre.length == 0) {
+      var randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
+    } else {
+      var randomGenre = selectedGenre;
+    }
     let randomOffset = 0;
     randomOffset = Math.floor(Math.random() * 1000);
     // console.log(randomOffset)
@@ -156,6 +173,10 @@ function Home(props) {
     // setAutoplay(autoplayQueue);
   }
 
+  const onGenreSelect = (event) => {
+    setSelectedGenre(event.target.value);
+  }
+
   return (
     <div className={displayType}>
       {!isMobile ? (
@@ -166,6 +187,24 @@ function Home(props) {
         <img src={BannerLogo} style={{ width: '90%', margin: '.5em 0em' }} />
       )}
       <div className={!isMobile ? 'controlContainer' : 'controlContainerMobile'}>
+        {!isMobile ? (
+            <select id='genreSelect' onChange={onGenreSelect} >
+              <option value=''>Any Genre</option>
+              {genresList.map((genre, index) => (
+                <option key={index} value={genre}>{
+                  genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+                }</option>
+              ))}
+            </select>
+        ) : (
+            <select id='genreSelect' onChange={onGenreSelect}>
+              {genresList.map((genre, index) => (
+                <option key={index} value={genre}>{
+                    genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+                }</option>
+              ))}
+            </select>
+        )}
         {!isMobile ? (
           <button id='random' type='button' className='rand-button' onClick={handleRandomize}>
             <img src={DiceLogo} style={{ width: '30px', height: '30px', verticalAlign: 'middle', marginRight: '5px', marginTop: '2px', paddingBottom: '5px' }} />
