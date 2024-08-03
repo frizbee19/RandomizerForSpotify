@@ -323,6 +323,7 @@ a.name:hover {
 
 select {
   background-color: var(--spotify-black);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
   color: var(--spotify-gray);
   border: solid 1px var(--spotify-gray);
   border-radius: 6px;

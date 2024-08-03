@@ -84,7 +84,7 @@ function Home(props) {
         }
       })
       .then(data => {
-        // console.log(data.genres);
+        console.log(data.genres);
         return data.genres;
       })
       .catch(error => {
@@ -93,9 +93,20 @@ function Home(props) {
     return genresResult;
   }
 
-  async function search(query, offset = 0, genre = '') {
-    // console.log("Search for " + searchInput)
+  /* ---------------------------- TRACK SEARCH ----------------------------*/
 
+
+  /**
+   * Performs a search for a song with the specified query, offset, and genre.
+   *
+   * @param {string} query - The search query.
+   * @param {number} [offset=0] - The offset of the search results.
+   * @param {string} [genre=''] - The genre of the song.
+   * @return {Promise<Object>} - A promise that resolves to the search results.
+   */
+  async function search(query, offset = 0, genre = '') {
+    // Construct the search URL
+    const searchUrl = `https://api.spotify.com/v1/search?q=${query}%20genre%3A${genre}&type=track&offset=${offset}`;
 
     var searchParameters = {
       method: 'GET',
@@ -104,7 +115,9 @@ function Home(props) {
         'Authorization': 'Bearer ' + accessToken
       }
     }
-    var tracksResult = await fetch('https://api.spotify.com/v1/search?q=' + query + '%20genre%3A' + genre + '&type=track' + '&offset=' + offset, searchParameters)
+
+    // Perform the search and handle the response
+    var tracksResult = await fetch(searchUrl, searchParameters)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -114,51 +127,177 @@ function Home(props) {
         }
       })
       .then(data => {
-        // console.log(data);
+        // Return the search results
+        // console.log(data.tracks);
         return data.tracks;
       })
       .catch(error => {
         console.log(error);
       })
-    // setDisplayedSong(trackResult)
+
+    // Return the search results
     return tracksResult;
   }
 
+  /**
+   * Performs a random search for a song with the specified genre and offset.
+   * If no genre is selected, it selects a random genre from the list of available genres.
+   * If the song is explicit and the `showExplicit` flag is not set, it performs a new random search.
+   * Otherwise, it sets the displayed song and genre.
+   */
   async function randomSearch() {
-    var genres = [];
-    if (genresList.length === 0) {
-      console.log('Getting genres...');
-      genres = await getGenreList();
-      setGenresList(genres);
-    }
-    else {
-      genres = genresList;
-    }
-    if (selectedGenre.length == 0) {
-      var randomGenre = '' + genres[Math.floor(Math.random() * genres.length)];
-    } else {
-      var randomGenre = selectedGenre;
-    }
-    let randomOffset = 0;
-    randomOffset = Math.floor(Math.random() * 1000);
-    // console.log(randomOffset)
+    // Get the list of genres if it is empty, otherwise use the cached list
+    let genres = genresList.length === 0 ? await getGenreList() : genresList;
+    
+    // Update the list of genres
+    setGenresList(genres);
+
+    // Select a random genre from the list
+    let randomGenre = selectedGenre.length === 0
+      ? genres[Math.floor(Math.random() * genres.length)]
+      : selectedGenre;
+
+    // Generate a random offset
+    let randomOffset = Math.floor(Math.random() * 1000);
+
+    // Perform the search with the specified query, offset, and genre
     let tracks = await search(generateRandomQuery(), randomOffset, randomGenre);
+
+    // Check if the search returned a valid song
     if (!tracks || !tracks.items[0] || (tracks.items[0].explicit && !showExplicit)) {
-      console.log("retrying search");
+      // If the song is explicit and the `showExplicit` flag is not set, perform a new random search
       randomSearch();
-    }
-    else {
+    } else {
+      // Set the displayed song and format the genre
       setDisplayedSong(tracks.items[0]);
-      console.log(tracks.items[0]);
-      let genre = () => {
-        let result = "";
-        for (const word of randomGenre.split('-')) {
-          result += word[0].toUpperCase() + word.substring(1) + " ";
-        }
-        return result.trim();
-      }
-      setDisplayedGenre(genre);
+      let formattedGenre = formatGenre(randomGenre);
+      setDisplayedGenre(formattedGenre);
     }
+  }
+
+  // /* ---------------------------- ALBUM SEARCH ----------------------------*/
+
+  // /**
+  //  * Performs a search for an album with the specified query, offset, and genre.
+  //  *
+  //  * @param {string} query - The search query.
+  //  * @param {number} [offset=0] - The offset of the search results.
+  //  * @param {string} [genre=''] - The genre of the song.
+  //  * @return {Promise<Object>} - A promise that resolves to the search results.
+  //  */
+  // async function albumSearch(query, offset = 0, genre = '', hipster = false) {
+  //   // Construct the search URL
+  //   const searchUrl = `https://api.spotify.com/v1/search?q=${query}&type=album&offset=${offset}`;
+
+  //   var searchParameters = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + accessToken
+  //     }
+  //   }
+
+  //   // Perform the search and handle the response
+  //   var albumsResult = await fetch(searchUrl, searchParameters)
+  //     .then(response => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       } else {
+  //         setError(true);
+  //         throw Error(`${response.status} - ${response.statusText}`);
+  //       }
+  //     })
+  //     .then(data => {
+  //       // Return the search results
+  //       console.log(data);
+  //       return data.albums;
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     })
+
+  //   // Return the search results
+  //   return albumsResult;
+  // }
+
+  // async function getAlbumTracks(albumId) {
+  //   var searchParameters = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + accessToken
+  //     }
+  //   }
+  //   var tracksResult = await fetch(`https://api.spotify.com/v1/albums/${albumId}/tracks`, searchParameters)
+  //     .then(response => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       } else {
+  //         setError(true);
+  //         throw Error(`${response.status} - ${response.statusText}`);
+  //       }
+  //     })
+  //     .then(data => {
+  //       // console.log(data.tracks);
+  //       return data.tracks;
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  //   return tracksResult;
+  // }
+
+  // async function randomSearchFromAlbum() {
+  //   // Get the list of genres if it is empty, otherwise use the cached list
+  //   let genres = genresList.length === 0 ? await getGenreList() : genresList;
+    
+  //   // Update the list of genres
+  //   setGenresList(genres);
+
+  //   // Select a random genre from the list
+  //   let randomGenre = selectedGenre.length === 0
+  //     ? genres[Math.floor(Math.random() * genres.length)]
+  //     : selectedGenre;
+
+  //   // Generate a random offset
+  //   let randomOffset = Math.floor(Math.random() * 1000);
+
+  //   // Perform the search with the specified query, offset, and genre
+  //   let albums = await albumSearch(generateRandomQuery(), randomOffset, randomGenre);
+
+  //   // Check if the search returned a valid album
+  //   if (!albums || !albums.items[0]) {
+  //     // If the album is not valid, perform a new random search
+  //     console.log("Album not found");
+  //     // randomSearchFromAlbum();
+  //   } else {
+  //     // Set the displayed album and format the genre
+  //     let randomAlbum = albums.items[0];
+  //     let formattedGenre = formatGenre(randomGenre);
+  //     setDisplayedGenre(formattedGenre);
+      
+  //     // Use the album's id to call getAlbumTracks()
+  //     let tracks = await getAlbumTracks(randomAlbum.id);
+      
+  //     // Return a random track from the list of tracks
+  //     let randomTrack = tracks.items[Math.floor(Math.random() * tracks.items.length)];
+
+  //     // Check if the search returned a valid track or if the track is explicit
+  //     // if (!randomTrack || (randomTrack.explicit && !showExplicit)) {
+  //     //   // If the track is not valid, perform a new random search
+  //     //   randomSearchFromAlbum();
+  //     // }
+
+  //     setDisplayedSong(randomTrack);
+  //   }
+  // }
+
+
+
+  function formatGenre(genre) {
+    return genre.toLowerCase().split('-').map(word => {
+      return word.charAt(0).toUpperCase() + word.slice(1) + ' ';
+    }).join('').trim();
   }
 
   // const handleAutoplay = () => {
