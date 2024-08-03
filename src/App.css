@@ -159,7 +159,7 @@ a.name:hover {
 
 .checkContainerMobile {
   font-size: calc(16px + 2vmin);
-  margin: 1vh 1vw;
+  margin: 2vh 1vw;
   
 }
 
@@ -329,5 +329,15 @@ select {
   padding: 10px;
   margin: 2vh 2vw 2vh 0vw;
   font-size: calc(16px);
+}
+
+select:hover {
+  border-color: white;
+  color: white;
+}
+
+select:focus {
+  border-color: white;
+  color: white;
 }
 

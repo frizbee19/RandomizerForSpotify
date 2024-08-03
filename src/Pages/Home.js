@@ -16,6 +16,7 @@ function Home(props) {
   const [displayedGenre, setDisplayedGenre] = useState("");
   const [genresList, setGenresList] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [showExplicit, setShowExplicit] = useState(false);
   // const [autoplay, setAutoplay] = useState(false);
   // const [autoplayQueue, setAutoplayQueue] = useState(false);
   const [error, setError] = useState(props.error);
@@ -142,7 +143,7 @@ function Home(props) {
     randomOffset = Math.floor(Math.random() * 1000);
     // console.log(randomOffset)
     let tracks = await search(generateRandomQuery(), randomOffset, randomGenre);
-    if (!tracks || !tracks.items[0]) {
+    if (!tracks || !tracks.items[0] || (tracks.items[0].explicit && !showExplicit)) {
       console.log("retrying search");
       randomSearch();
     }
@@ -171,6 +172,10 @@ function Home(props) {
       document.getElementById("random").disabled = false;
     }, 1000);
     // setAutoplay(autoplayQueue);
+  }
+
+  function toggleExplicit() {
+    setShowExplicit(!showExplicit);
   }
 
   const onGenreSelect = (event) => {
@@ -208,17 +213,22 @@ function Home(props) {
           </button>
         )}
         <PreviewPlayer src={displayedSong ? displayedSong.preview_url : ''} active={true} />
+          <label className='checkContainer checkContainerMobile'>{!isMobile ? 'Show Explicit Content' : 'Explicit'}
+            <input value="autoplay" type='checkbox' onChange={toggleExplicit} checked={showExplicit} className='checkbox' />
+            <span className='checkmark'></span>
+          </label>
         {isMobile &&
           (
-            <select id='genreSelect' onChange={onGenreSelect}>
-              <option value=''>Any Genre</option>
-              {genresList.map((genre, index) => (
-                <option key={index} value={genre}>{
-                  genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
-                }</option>
-              ))}
-            </select>
-
+            <div>
+              <select id='genreSelect' onChange={onGenreSelect}>
+                <option value=''>Any Genre</option>
+                {genresList.map((genre, index) => (
+                  <option key={index} value={genre}>{
+                    genre.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase())
+                  }</option>
+                ))}
+              </select>
+            </div>
           )}
         {/* <button type='button' className='rand-button' onClick={requestAuthorization}>
           Log In

@@ -27,7 +27,7 @@
   display: inline-block;
   padding: 11px 13px;
   background: var(--spotify-green);
-  margin: 1vh 2vw;
+  margin: 1vh 3vw 1vh 2vw;
   border: 2px solid var(--spotify-green);
   border-radius: 8px;
   transition: background 0.1s ease-in-out;

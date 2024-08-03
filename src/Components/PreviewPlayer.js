@@ -71,20 +71,20 @@ function PreviewPlayer(props) {
       {!isMobile ? (
         <span>
           <audio id="preview" ref={previewAudioRef} src={src} autoPlay={isPlaying} muted={isMuted} />
-          <button type='button' className='rand-button' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center' }}>
+          <button type='button' className='rand-button' onClick={togglePlay} style={{ borderRadius: '50%', padding: '3px 6px', justifyItems: 'center', marginRight: '1vw' }}>
             {isPlaying ? (
               <img src={Stop} style={{ width: '50px', height: '50px' }} />
             ) : (
               <img src={PlayPreview} style={{ width: '50px', height: '50px' }} />
             )}
           </button>
-          <span>
+          {/* <span>
             <label className='checkContainer'>Mute
               <input value="autoplay" type='checkbox' onChange={toggleMute} checked={isMuted} className='checkbox' />
               <span className='checkmark'></span>
             </label>
 
-          </span>
+          </span> */}
         </span>
       ) : (
         <span>
@@ -96,13 +96,13 @@ function PreviewPlayer(props) {
               <img src={PlayPreview} style={{ width: '15vw', height: '15vw' }} />
             )}
           </button>
-          <span>
+          {/* <span>
             <label className='checkContainer checkContainerMobile'>Mute
               <input value="autoplay" type='checkbox' onChange={toggleMute} checked={isMuted} className='checkbox' />
               <span className='checkmark'></span>
             </label>
 
-          </span>
+          </span> */}
         </span>
       )}
     </span>
